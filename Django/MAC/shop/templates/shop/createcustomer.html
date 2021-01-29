@@ -1,0 +1,165 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Create Account {% endblock %}
+{% block Css %}
+.divider-text {
+position: relative;
+text-align: center;
+margin-top: 15px;
+margin-bottom: 15px;
+}
+.divider-text span {
+padding: 7px;
+font-size: 12px;
+position: relative;
+z-index: 2;
+}
+.divider-text:after {
+content: "";
+position: absolute;
+width: 100%;
+border-bottom: 1px solid #ddd;
+top: 55%;
+left: 0;
+z-index: 1;
+}
+
+.btn-facebook {
+background-color: #405D9D;
+color: #fff;
+}
+.btn-twitter {
+background-color: #42AEEC;
+color: #fff;
+}
+#mySidenav a{
+text-decoration:none;
+}
+{% endblock %}
+{% block body %}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+<div class="container" style="padding-top:70px">
+    <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px;">
+            <h4 class="card-title mt-3 text-center">Create Account</h4>
+            <p class="text-center">Get started with your free account</p>
+            <form action="" method="POST">{% csrf_token %}
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input name="customername" class="form-control" placeholder="Full name" type="text" required>
+                </div> <!-- form-group// -->
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                    </div>
+                    <input name="Emailid" class="form-control" placeholder="Email address" type="email" required>
+                </div> <!-- form-group// -->
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                    </div>
+                    <select class="custom-select" style="max-width: 120px;">
+                        <option selected="">+91</option>
+                    </select>
+                    <input name="phoneno" class="form-control" placeholder="Phone number" type="text" required>
+                </div> <!-- form-group// -->
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    <input class="form-control" placeholder="Create password" type="password" name="password" required>
+                </div> <!-- form-group// -->
+                <div style="font-size:x-small;padding-left: 200px;">* Enter Password of Min Length 9</div>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    <input class="form-control" placeholder="Repeat password" type="password" name="passwordrepeat" required>
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
+                </div> <!-- form-group// -->
+            </form>
+        </article>
+    </div> <!-- card.// -->
+
+</div>
+<!--container end.//-->
+<br><br>
+<!----------------Java script,jquery & bootstrap-------------->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock %}
+<!--------------------  alerts ------------------------->
+{% block alert %}
+{% if alert == "passnotmatch" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+    <strong>PASSWORD DOSEN'T MATCH!</strong><span style="font-size: 15px;"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% elif alert == "empty" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+    <strong>FILL COMPLETE DETAILS!</strong><span style="font-size: 15px;"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% elif alert == "phoneerror" or alert == "wrongnumber" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+    <strong>ENTER CORRECT MOBILE NUMBER!</strong><span style="font-size: 15px;"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% elif alert == "passerror" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+    <strong>PASSWORD LENGHT INSUFFICIENT!</strong><span style="font-size: 15px;"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% elif alert == "emailexist" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+    <strong>EMAIL ID ALREADY EXIST!</strong><span style="font-size: 15px;"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% elif alert == "phoneexist" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+    <strong>PHONE NUMBER ALREADY EXIST!</strong><span style="font-size: 15px;"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% elif alert == "wrongname" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+    <strong>SPECIAL CHARACTERS NOT ALLOWED!</strong><span style="font-size: 15px;"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+    <strong>COVID19 UPDATE!</strong><span style="font-size: 15px;"> We deliver products with all safety
+        measures.</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endblock %}
+{% block sidenavbar %}
+<div id="mySidenav" class="sidenav" style="padding-top: 23px;">
+    <i class="far fa-user-circle" style="font-size:24px;float:left;padding-top: 4px;margin-left: 28px;font-weight:600;font-size:25px;margin-right:10px" aria-hidden="true"></i>
+    <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hello, Sign in</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-left: 0px;margin-left: 0px;">×</a>
+    <a href="../myorders" style="padding-right: 100px;padding-top:20px;">My Orders</a>
+    <a href="../mycart">My Cart</a>
+    <a href="../checkout">Checkout</a>
+    <a href="" class="cart" onclick="clearcart()" >Clear Cart</a>
+    <a href="../sale">Sale</a>
+    <a href="../contactus">Contact Us</a>
+    <a href="../about">About Us</a>
+  </div>
+  
+  <script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+  </script>
+  {% endblock %}

@@ -1,0 +1,263 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Shop {% endblock %}
+{% load static %}
+{% block Css %}
+input.dropdown:hover{
+background-color:#0044cc;
+color:white;
+}
+.dropdown-menu{
+max-height: 300px;
+overflow-y: auto;
+scrollbar-color:dark;
+border:0.5px;
+border-style:solid;
+border-color:#808080;
+padding:3px;
+}
+.d-flex{
+box-sizing: border-box
+}
+.d-flex input[type=text] {
+padding: 5px;
+padding-right: 0px;
+font-size: 15px;
+border: 1px solid grey;
+float: left;
+width: 80%;
+background: #f1f1f1;
+}
+.d-flex button {
+float: left;
+width: 7%;
+padding-top: 0px;
+padding: 5px;
+background: #2196F3;
+color: white;
+font-size: 17px;
+border: 1px solid grey;
+border-left: none; /* Prevent double borders */
+cursor: pointer;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+}
+.d-flex::after {
+content: "";
+clear: both;
+display: table;
+}
+.d-flex button:hover {
+background: #0b7dda;
+}
+{% endblock %}
+{% block currentuser %}
+<div style="color:aliceblue; margin-left:20px">{{currentuser}}</div>
+{% endblock %}
+
+
+{% block signup %}<a class="nav-link" href="signin"
+  style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Sign in</a>
+{% endblock %}
+
+
+{% block searchbar %}
+<form class="d-flex" action="categories" style="margin-left:20px">
+  <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search"
+    style="width: 500px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+{% endblock %}
+
+
+{% block dropdown %}
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+    aria-expanded="false">
+    Categories
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="padding: 0px;border-radius:0px;">
+    {% for item in categories %}
+    <form action="categories">
+      <input type="submit" value="{{item}}" name="category"
+        style=" padding-left:5px;padding-right:25px;width:100%;text-align:left ;border:0px; font-weight:500;font-size:15px;padding-bottom:5px"
+        class="dropdown">
+    </form>
+    {% endfor %}
+  </ul>
+</li>
+{% endblock %}
+{% block body %}
+{% load shoptemplates %}
+<!---------------------------------------------------------------------------------------->
+<!---crousal product---->
+<main>
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+      <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+      <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+      <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-interval="3000">
+        <img src="{% static 'shop/crousal1.jpg' %}" class="d-block w-100" alt="..." style="height: 350px;">
+      </div>
+      <div class="carousel-item" data-interval="3000">
+        <img src="{% static 'shop/crousal2.jpg' %}" class="d-block w-100" alt="..." style="height: 350px;">
+      </div>
+      <div class="carousel-item" data-interval="3000">
+        <img src="{% static 'shop/crousal3.jpg' %}" class="d-block w-100" alt="..." style="height: 350px;">
+      </div>
+      <div class="carousel-item" data-interval="3000">
+        <img src="{% static 'shop/crousal4.jpg' %}" class="d-block w-100" alt="..." style="height: 350px;">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+  </div>
+  {% for prods in allproducts %}
+  <div class="container">
+    <div id="carouselExampleIndicators{{forloop.counter}}" class="carousel slide" data-bs-ride="carousel">
+      {% for items in prods.product %}
+      <div style="padding-left: 16px; padding-top:25px; font-size:20px; font-weight:550">{{items}}</div>
+      {% endfor %}
+      <div class="carousel-inner container no-padding">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2 carousel-item active" style="padding-top: 10px;">
+          {% for item1 in prods.first5 %}
+          <div class="djangoslideshow">
+            <div class="card d-block w-9" style="width: 13.65rem;float:left">
+              <img src="/media/{{item1.image}}" class="card-img-top" alt="..." height="130">
+              <div class="card-body">
+                <h6 id="namepr{{item1.id}}" class="card-title" style="font-size: 15px; font-weight:600 ">{{item1.product_name}}</h6>
+                <p class="card-text" style="font-size:13px; font-weight:500;margin-bottom:2px;">
+                  {{item1.desc|truncatechars:50}}</p>
+                  {% if item1.discount == 0 %}
+                  {% if item1.stock > 0 %}
+                  <div  style="margin-top:12px;color:#262626;font-weight:600;margin-bottom: 13px;">M.R.P :&#8377;<span id="pricepr{{item1.id}}">{{item1.price}}</span></div>
+                  <button id="pr{{item1.id}}" class="btn btn-primary cart"
+                    style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px; display:inline">Add to cart</button>
+                    {% else %}
+                    <div style="color:#262626;font-weight:600;">M.R.P :&#8377;<span id="pricepr{{item1.id}}">{{item1.price}}</span></div>
+                    <span style="color:crimson;font-weight:600;display:block"><span>Out of Stock</span></span>    
+                    {% endif %}
+                    {% else %}
+                    <div style="color:#262626;font-weight:600">M.R.P :<strike style="color: #262626;">&#8377;{{item1.price}}</strike> <span style="color: crimson;"> &#8377;<span id="pricepr{{item1.id}}">{{item1.price|discountedprice:item1.discount }}</span></span></div>
+                      {% if item1.stock > 0 %}
+                      <span style="color: crimson;font-weight:600;display:block">{{item1.discount}} % off</span>
+                      <button id="pr{{item1.id}}" class="btn btn-primary cart"
+                        style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px; display:inline">Add
+                        to cart</button>
+                        {% else %}
+                        <span style="color: crimson;font-weight:600;display:block"> {{item1.discount}} % off  <span style="margin-left: 10px;" >Out of Stock</span></span>    
+                        {% endif %}
+                  {% endif %}
+                <form action="productview" method="get" style="display: inline;">
+                  <button id="vr{{item1.id}}" name="products" value="{{item1.id}}" class="btn btn-primary"
+                    style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px;">Quick View</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% for i in prods.list %}
+        <div class="col-xs-2 col-sm-2 col-md-2 col-xl-2 carousel-item" style="padding-top: 10px;">
+          {% for key,value in i.items %}
+          <div class="djangoslideshow">
+            <div class="card d-block w-9" style="width: 13.65rem;float:left">
+              <img src="/media/{{value.image}}" class="card-img-top" alt="..." height="130">
+              <div class="card-body">
+              <h6 id="namepr{{value.id}}" class="card-title" style="font-size: 15px; font-weight:600 ">{{value.product_name}}</h6>
+                <p class="card-text" style="font-size:13px; font-weight:500;margin-bottom:2px;">{{value.desc|truncatechars:50}}</p>
+                  {% if value.discount == 0 %}
+                  {% if value.stock > 0 %}
+                  <div style="margin-top:11px;color:#262626;font-weight:600;margin-bottom: 10px;">M.R.P :&#8377;<span id="pricepr{{value.id}}" >{{value.price}}</span></div>
+                  <button id="pr{{value.id}}" class="btn btn-primary cart"
+                    style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 2px; display:inline">Add
+                    to cart</button>
+                    {% else %}
+                    <div style="color:#262626;font-weight:600">M.R.P :&#8377;<span id="pricepr{{value.id}}">{{value.price}}</span></div>
+                    <span style="color: crimson;color:crimson;font-weight:600;display:block"><span style="margin-left: 10px;" >Out of Stock</span></span>    
+                    {% endif %}
+                  {% else %}
+                  <div style="color:#262626;font-weight:600">M.R.P :<strike style="color: #262626;">&#8377;<span style="color:#262626;font-weight:600;">&#8377;{{value.price}}</span></strike> <span style="color: crimson;"> &#8377;<span id="pricepr{{value.id}}">{{value.price|discountedprice:value.discount }}</span></span></div>
+                      {% if value.stock > 0 %}
+                      <span style="color: crimson;font-weight:600;display:block"> {{value.discount}} % off</span>
+                      <button id="pr{{value.id}}" class="btn btn-primary cart"
+                        style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px; display:inline">Add
+                        to cart</button>
+                        {% else %}
+                        <span style="color: crimson;color:crimson;font-weight:600;display:block"> {{value.discount}} % off  <span style="margin-left: 10px;" >Out of Stock</span></span>    
+                        {% endif %}
+                  {% endif %}
+                <form action="productview" method="GET" style="display: inline;">
+                  <button id="vr{{value.id}}" value="{{value.id}}" name="products" class="btn btn-primary" style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px;">Quick View</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators{{forloop.counter}}" role="button"
+        data-bs-slide="prev" style="height:300px; width:auto; margin-top:60px">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators{{forloop.counter}}" role="button"
+        data-bs-slide="next" style="height:300px; width:auto; margin-top:60px">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</main>
+<!---------------------------------------------------------------------------------------->
+{% endblock %}
+{% block alert%}
+<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+  <strong>COVID19 UPDATE!</strong><span style="font-size: 15px;"> We deliver products with all safety
+    measures.</span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endblock %}
+{% block cart_count %}
+<li class="nav-item">
+  <a href="/shop/mycart" class="nav-link" aria-disabled="true"><i class="fa"
+      style="font-size:24px;color:aliceblue;padding-left:10px;">&#xf07a;</i><span class='badge badge-warning'
+      id='lblCartCount'> <span id='cart'>0</span> </span>
+  </a>
+</li>
+{% endblock %}
+{% block sidenavbar %}
+<div id="mySidenav" class="sidenav" style="padding-top: 23px;">
+  <i class="far fa-user-circle" style="font-size:24px;float:left;padding-top: 4px;margin-left: 28px;font-weight:600;font-size:25px;margin-right:10px"
+    aria-hidden="true"></i>
+  <a href="signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-left: 0px;margin-left: 0px;">×</a>
+  <a href="myorders" style="padding-right: 100px;padding-top:20px;">My Orders</a>
+  <a href="mycart">My Cart</a>
+  <a href="checkout">Checkout</a>
+  <a href="" class="cart" onclick="clearcart()" >Clear Cart</a>
+  <a href="sale">Sale</a>
+  <a href="contactus">Contact Us</a>
+  <a href="about">About Us</a>
+</div>
+
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script>
+{% endblock %}

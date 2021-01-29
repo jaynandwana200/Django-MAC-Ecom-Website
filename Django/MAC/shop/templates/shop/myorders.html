@@ -1,0 +1,72 @@
+{% extends 'shop/basic.html' %}
+{% block title %} My Orders {% endblock %}
+{% load static %}
+{% block body %}
+{% load shoptemplates %}
+<div class="container">
+  <div style="margin-top:20px;">
+    {% for items in orders %}
+    <h5> Order No : {{ids|last}}</h5>
+    {{ids|pop}}
+    <span style="font-size: 19px;">Quantity</span>
+    <span style="margin-left: 500px;font-size: 19px;">Product</span>
+    <span style="float:right;font-size: 19px;">Price</span>
+    <br>
+      {% for item in items %}
+      {% for i in item %}
+      {% if forloop.counter == 1 %}
+      <span>{{i}}</span>
+      {% elif forloop.counter == 2 %}
+      <span style="margin-left: 500px;">{{i}}</span>
+      {% elif forloop.counter == 3 %}
+      <span style="float:right;">&#8377; {{i}}</span>
+      {% endif %}
+      {% endfor %}
+      <br>
+      {% endfor %}
+      <hr>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+{% block sidenavbar %}
+<div id="mySidenav" class="sidenav" style="padding-top: 23px;">
+  <i class="far fa-user-circle" style="font-size:24px;float:left;padding-top: 4px;margin-left: 28px;font-weight:600;font-size:25px;margin-right:10px" aria-hidden="true"></i>
+  <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-left: 0px;margin-left: 0px;">×</a>
+  <a href="" style="padding-right: 100px;padding-top:20px;">My Orders</a>
+  <a href="../mycart">My Cart</a>
+  <a href="../checkout">Checkout</a>
+  <a href="" class="cart" onclick="clearcart()" >Clear Cart</a>
+  <a href="../sale">Sale</a>
+  <a href="../contactus">Contact Us</a>
+  <a href="../about">About Us</a>
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+{% endblock %} 
+{% block cart_count %}
+<li class="nav-item">
+  <a class="nav-link" aria-disabled="true"><i class="fa" style="font-size:24px;color:aliceblue;">&#xf07a;</i><span
+      class='badge badge-warning' id='lblCartCount'> <span id='cart'>0</span> </span>
+  </a>
+</li>
+{% endblock %}
+{% block alert %}
+<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+  <strong>COVID19 UPDATE!</strong><span style="font-size: 15px;"> We deliver products with all safety
+    measures.</span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endblock %}
+{% block currentuser %}
+    <div style="color:aliceblue;margin-right:10px">{{currentuser}}</div>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}Contact Us{% endblock %}
+{% block Css %}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+width: 100%;
+padding: 12px;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
+margin-top: 6px;
+margin-bottom: 16px;
+resize: vertical;
+}
+#phoneno,#email{
+width: 100%;
+padding: 12px;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
+margin-top: 6px;
+margin-bottom: 16px;
+resize: vertical;
+}
+
+input[type=submit] {
+background-color: #4CAF50;
+color: white;
+padding: 12px 20px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+input[type=submit]:hover {
+background-color: #45a049;
+}
+
+.container {
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+}
+{% endblock %}
+{% block body %}
+<h3 style="margin-left:60px;margin-bottom:10px;margin-top:10px">Contact Form</h3>
+
+<div class="container">
+  <form action="" method="POST">{% csrf_token %}
+    <label for="name">Name</label>
+    <input type="text" id="nam" name="name" placeholder="Your name..">
+
+    <label for="emailid">Email Id</label>
+    <input type="email" id="email" name="emailid" placeholder="abc@gmail.com">
+
+    <label for="telephone">Phone No</label>
+    <input type="tel" id="phoneno" name="phone" placeholder="0123456789">
+
+    <label for="country">Country</label>
+    <input type="text" id="countr" name="country" placeholder="India">
+
+    <label for="subject">Subject</label>
+    <textarea id="subjec" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+
+    <input type="submit" value="Submit">
+  </form>
+</div>
+{% endblock %}
+{% block css %}{% endblock %}
+{% block sidenavbar %}
+<div id="mySidenav" class="sidenav" style="padding-top: 23px;">
+  <i class="far fa-user-circle"
+    style="font-size:24px;float:left;padding-top: 4px;margin-left: 28px;font-weight:600;font-size:25px;margin-right:10px"
+    aria-hidden="true"></i>
+  <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!,
+    {{currentuser|truncatewords:1}}</a>
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-left: 0px;margin-left: 0px;">×</a>
+  <a href="../myorders" style="padding-right: 100px;padding-top:20px;">My Orders</a>
+  <a href="../mycart">My Cart</a>
+  <a href="../checkout">Checkout</a>
+  <a href="" class="cart" onclick="clearcart()">Clear Cart</a>
+  <a href="../sale">Sale</a>
+  <a href="">Contact Us</a>
+  <a href="../about">About Us</a>
+</div>
+
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+</script>
+{% endblock %}
+{% block alert %}
+{% if alert == "filldetails" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 0px;"><strong>FILL COMPLETE DETAILS</strong><span style="font-size: 15px;"></span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+  <strong>COVID19 UPDATE!</strong><span style="font-size: 15px;"> We deliver products with all safety
+    measures.</span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}About US{% endblock %}
+{% load static %}
+{% block Css %}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+{% endblock %}
+{% block body %}
+
+<div class="about-section">
+  <h1>My Awesome Cart</h1>
+  <p>A Perfect Solution for Online Mart as well as Data Management </p>
+  <p>We Focus on Quality as well as cost of product. Our products are of best quality and lowest price</p>
+</div>
+
+<h2 style="text-align:center">Our Team</h2>
+<div class="row">
+
+  <div class="column" style="margin-left:435px">
+    <div class="card">
+      <img src="{% static 'shop/img.jpg' %}" alt="Mike" style="width:100%">
+      <div class="container">
+        <h2>Jay Nandwana</h2>
+        <p class="title">Developer</p>
+        <p>Student from 5th sem Cse student Bangalore Institute of Technology</p>
+        <p>jaynandwana@gmail.com</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+
+</div> 
+{% endblock %}
+{% block sidenavbar %}
+<div id="mySidenav" class="sidenav" style="padding-top: 23px;">
+  <i class="far fa-user-circle" style="font-size:24px;float:left;padding-top: 4px;margin-left: 28px;font-weight:600;font-size:25px;margin-right:10px" aria-hidden="true"></i>
+  <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-left: 0px;margin-left: 0px;">×</a>
+  <a href="../myorders" style="padding-right: 100px;padding-top:20px;">My Orders</a>
+  <a href="../mycart">My Cart</a>
+  <a href="../checkout">Checkout</a>
+  <a href="" class="cart" onclick="clearcart()" >Clear Cart</a>
+  <a href="../sale">Sale</a>
+  <a href="../contactus">Contact Us</a>
+  <a href="">About Us</a>
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+{% endblock %}
+{% block alert %}
+<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
+  <strong>COVID19 UPDATE!</strong><span style="font-size: 15px;"> We deliver products with all safety
+    measures.</span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endblock %}
