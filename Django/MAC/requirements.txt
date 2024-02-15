@@ -4,3 +4,4 @@ django-filter==23.5
 sqlparse==0.4.4
 typing_extensions==4.9.0
 tzdata==2024.1
+psycopg2-binary==3.1.9
