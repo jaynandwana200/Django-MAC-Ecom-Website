@@ -15,7 +15,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -79,13 +79,16 @@ WSGI_APPLICATION = 'MAC.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jay',
-        'USER':'postgres',
-        'PASSWORD':'1234',
-        'HOST':'localhost',
-    }
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'Bharat_Shopee',
+    'USER': 'jaynandwana2018',
+    'PASSWORD': 'znl5tjTUsKA9',
+    'HOST': 'ep-spring-thunder-a19ysuid-pooler.ap-southeast-1.aws.neon.tech',
+    'PORT': '5432',
+    'OPTIONS': {'sslmode': 'require'},
+    'DISABLE_SERVER_SIDE_CURSORS': True,
+  }
 }
 
 
@@ -93,29 +96,17 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-  {
-        'NAME': 'django-advanced_password_validation.advanced_password_validation.ContainsDigitsValidator',
-        'OPTIONS': {
-            'min_digits': 1
-        }
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django-advanced_password_validation.advanced_password_validation.ContainsUppercaseValidator',
-        'OPTIONS': {
-            'min_uppercase': 1
-        }
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django-advanced_password_validation.advanced_password_validation.ContainsLowercaseValidator',
-        'OPTIONS': {
-            'min_lowercase': 1
-        }
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django-advanced_password_validation.advanced_password_validation.ContainsSpecialCharactersValidator',
-        'OPTIONS': {
-            'min_characters': 1
-        }
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 

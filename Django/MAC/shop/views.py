@@ -9,7 +9,7 @@ from django.core import serializers
 import json
 from django.views.decorators.csrf import csrf_exempt
 from paytm import checksum
-MERCHANT_KEY='Ee6zeIgR@SNQKu_Z';
+MERCHANT_KEY='Ee6zeIgR@SNQKu_Z'
 # Create your views here.
 
 def index(request):
@@ -78,6 +78,8 @@ def index(request):
     name=""
     for items in custom:
         name=items.object.customer_name
+    if(name == "Jay"):
+        name = ""
     ###################################################################################
     params = {'allproducts': allproducts, 'categories': categor,"currentuser":name}
     return render(request, 'shop/index.html', params)
@@ -90,13 +92,24 @@ def about(request):
     params={}
     for items in custom:
         name=items.object.customer_name
+    if(name == "Jay"):
+        name = ""
     params["currentuser"]=name
     return render(request, 'shop/about.html',params)
 
 
 def contactus(request):
     if(request.method=="GET"):
-        return render (request,'shop/contactus.html')
+        customers=request.session.get("customer")
+        custom=serializers.deserialize("json", customers) ## deserializing json 
+        name=""
+        params={}
+        for items in custom:
+            name=items.object.customer_name
+        if(name == "Jay"):
+            name = ""
+        params["currentuser"]=name
+        return render(request, 'shop/about.html',params)
     else:
         customname = request.POST.get("name","")
         mail_id = request.POST.get("emailid","")
@@ -118,6 +131,8 @@ def myorders(request):
     params={}
     for items in custom:
         name=items.object.customer_name
+    if(name == "Jay"):
+        name = ""
     params["currentuser"]=name
     ###########################raw sql queries###########################
     order_details = orderdetails.objects.raw('select * from shop_orderdetails')
@@ -177,6 +192,8 @@ def productview(request):
     name=""
     for items in custom:
         name=items.object.customer_name
+    if(name == "Jay"):
+        name = ""
     params["currentuser"]=name
     params["stock"]=stoc
     return render(request,'shop/productview.html',params)
@@ -208,6 +225,8 @@ def checkout(request):
         params={}
         for items in custom:
             name=items.object.customer_name
+        if(name == "Jay"):
+            name = ""
         params["currentuser"]=name
         return render(request, 'shop/checkout.html',params)
     else:
@@ -361,6 +380,8 @@ def categories(request):
     name=""
     for items in custom:
         name=items.object.customer_name
+    if(name == "Jay"):
+        name = ""
     ###################################################################################
     params = {"products": productlist, "category": cat,"currentuser":name}
     return render(request, 'shop/categories.html', params)
@@ -372,6 +393,8 @@ def mycart(request):
     name=""
     for items in custom:
         name=items.object.customer_name   
+    if(name == "Jay"):
+        name = ""
     params = {"currentuser":name}
     return render(request,"shop/mycart.html",params)
 
@@ -391,6 +414,8 @@ def sale(request):
     name=""
     for items in custom:
         name=items.object.customer_name
+    if(name == "Jay"):
+        name = ""
     ###########################################################################
     params={"dispro":dispro,"currentuser":name,"category": cat}
     return render(request,"shop/sale.html",params)
