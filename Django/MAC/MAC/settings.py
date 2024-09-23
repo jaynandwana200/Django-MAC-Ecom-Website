@@ -12,7 +12,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
+import socket
 
+try:
+    HOSTNAME = socket.gethostname()
+except:
+    HOSTNAME = 'localhost'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
@@ -24,9 +29,9 @@ DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 SECRET_KEY = '(c9p7u6_fgdv+8#@bgl8&)bakt%ynd6tz(g%kl@$r8+um)fb$2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ''
 
 
 # Application definition
@@ -46,6 +51,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'MAC.urls'
 
@@ -79,17 +87,15 @@ WSGI_APPLICATION = 'MAC.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'Bharat_Shopee',
-    'USER': 'jaynandwana2018',
-    'PASSWORD': 'znl5tjTUsKA9',
-    'HOST': 'ep-spring-thunder-a19ysuid-pooler.ap-southeast-1.aws.neon.tech',
-    'PORT': '5432',
-    'OPTIONS': {'sslmode': 'require'},
-    'DISABLE_SERVER_SIDE_CURSORS': True,
-  }
-}
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Django',
+        'USER': 'django@nnnnnnnnnnnnnnnnnnfghbfghff',
+        'PASSWORD': 'Lakshi@2004',
+        'HOST': "nnnnnnnnnnnnnnnnnnfghbfghff.postgres.database.azure.com",
+        'PORT': '5432',
+        "OPTIONS":{"sslmode" : "require"},
+    }}
 
 
 # Password validation
@@ -133,3 +139,6 @@ STATIC_URL = '/static/'
 #managing media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = BASE_DIR / 'staticfiles'

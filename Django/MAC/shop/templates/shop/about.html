@@ -1,3 +1,5 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% extends 'shop/basic.html' %}
 
 {% block title %}About US{% endblock %}
@@ -69,6 +71,17 @@ html {
 }
 
 {% endblock %}
+
+{% block signup %}
+{% if currentuser == "" %}<a class="nav-link" href="../signin"
+  style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Log in</a>
+  <a class="nav-link" href="../createcustomer" style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Sign in</a>
+{% else %}<a class="nav-link" href="../signout"
+style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Sign out</a>
+{% endif %} 
+{% endblock %}
+
+
 {% block body %}
 
 <div class="about-section">
@@ -77,28 +90,45 @@ html {
   <p>We Focus on Quality as well as cost of product. Our products are of best quality and lowest price</p>
 </div>
 
-<h2 style="text-align:center">Our Team</h2>
 <div class="row">
 
   <div class="column" style="margin-left:435px">
     <div class="card">
-      <img src="{% static 'shop/img.jpg' %}" alt="Mike" style="width:100%">
+      <img src="{% static 'shop/myimage.jpg' %}" alt="Mike" style="width:100%">
       <div class="container">
         <h2>Jay Nandwana</h2>
-        <p class="title">Developer</p>
-        <p>Student from 5th sem Cse student Bangalore Institute of Technology</p>
-        <p>jaynandwana@gmail.com</p>
-        <p><button class="button">Contact</button></p>
+        <p class="title">Web Developer</p>
+        <p>jaynandwana2018@gmail.com</p>
+        <button style="font-size:24px" onclick="window.location.href='www.linkedin.com/in/jay-nandwana';">Button <i class="fa fa-linkedin-square"></i></button>
       </div>
     </div>
   </div>
-
 </div> 
+
+
+{% endblock %}
+{% block cart_count %}
+<li class="nav-item">
+  <a href="/shop/mycart" class="nav-link" aria-disabled="true" style="padding-bottom: 25px;"><i class="fa"
+      style="font-size:24px;color:aliceblue;padding-left:10px;padding-bottom: 10px;">&#xf07a;</i><span class='badge badge-warning'
+      id='lblCartCount'> <span id='cart'>0</span> </span>
+  </a>
+</li>
+{% endblock %}
+{% block currentuser %}
+    <div style="color:aliceblue;margin-right:10px">{{currentuser}}</div>
 {% endblock %}
 {% block sidenavbar %}
 <div id="mySidenav" class="sidenav" style="padding-top: 23px;">
-  <i class="far fa-user-circle" style="font-size:24px;float:left;padding-top: 4px;margin-left: 28px;font-weight:600;font-size:25px;margin-right:10px" aria-hidden="true"></i>
-  <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+  <i class="fa fa-user" style="font-size:24px;float:left;padding-top: 4px;margin-left: 24px;font-weight:600;font-size:25px;margin-right:10px"
+    aria-hidden="true"></i>
+  
+    {% if currentuser != "" %}
+    <a href= "../" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+  {% else %}
+    <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, Log in</a>
+  {% endif %}
+  
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-left: 0px;margin-left: 0px;">×</a>
   <a href="../myorders" style="padding-right: 100px;padding-top:20px;">My Orders</a>
   <a href="../mycart">My Cart</a>

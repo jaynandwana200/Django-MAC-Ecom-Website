@@ -25,8 +25,14 @@
 {% endblock %}
 {% block sidenavbar %}
 <div id="mySidenav" class="sidenav" style="padding-top: 23px;">
-  <i class="far fa-user-circle" style="font-size:24px;float:left;padding-top: 4px;margin-left: 28px;font-weight:600;font-size:25px;margin-right:10px" aria-hidden="true"></i>
-  <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+  <i class="fa fa-user" style="font-size:24px;float:left;padding-top: 4px;margin-left: 24px;font-weight:600;font-size:25px;margin-right:10px"
+    aria-hidden="true"></i>
+    {% if currentuser != "" %}
+    <a href= "../" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+  {% endif %}
+  {% if currentuser == "" %}
+    <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, Log in</a>
+  {% endif %}
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-left: 0px;margin-left: 0px;">×</a>
   <a href="../myorders" style="padding-right: 100px;padding-top:20px;">My Orders</a>
   <a href="../mycart">My Cart</a>

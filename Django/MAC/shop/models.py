@@ -69,6 +69,7 @@ class contact(models.Model):
 
 
 class orderdetails(models.Model):
+    Email_id = models.EmailField(max_length=100, blank=False,default="")
     order_id = models.AutoField(primary_key=True)
     session_id = models.CharField(max_length=100,default="")
     item_json = models.CharField(max_length=10000,default="") 

@@ -8,6 +8,7 @@ admin.site.index_title = "Welcome to MAC Administration"
 
 urlpatterns = [
     path("", views.index, name="shophome"),
+    path("signout/", views.signout, name="signout"),
     path("about/", views.about, name="aboutus"),
     path("contactus/", views.contactus, name="contactus"),
     path("myorders/", views.myorders, name="myorders"),

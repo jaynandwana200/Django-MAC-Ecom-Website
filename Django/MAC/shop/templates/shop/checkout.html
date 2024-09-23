@@ -112,8 +112,6 @@ margin-bottom: 20px;
             <input type="hidden" name="amount" id="amount">
             <label for="fname"><i class="fa fa-user"></i> Full Name</label>
             <input type="text" id="fname" name="name" placeholder="Ram ji Sharma">
-            <label for="email"><i class="fa fa-envelope"></i> Email</label>
-            <input type="text" id="email" name="email" placeholder="Ramji@example.com">
             <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
             <input type="text" id="adr" name="address" placeholder="keshavpura sector-7">
             <label for="city"><i class="fa fa-institution"></i> City</label>
@@ -165,9 +163,11 @@ margin-bottom: 20px;
             </div>
           </div>
         </div>
-        <input type="submit" style="font-size:20px;font-weight:600;" value="Continue to checkout" onclick="clearcart()" class="btn" value="0">
-        <div style="margin-left: 550px;margin-top:20px;font-size:18px">or</div>
-          <input id="paytm" type="submit" style="margin-top:15px;border-radius:5px;font-size:20px;font-weight:600;" class='btn btn-success' name="paytm" height="100px" alt="submit" value="PayTm" onclick="clearcart()">
+      {% if currentuser == "" %}
+      <input type="url"  onclick="location.href='../signin'" style="font-size:20px;font-weight:600;" value = "Log in" class="btn" readonly>
+      {% else %}
+      <input type="submit" style="font-size:20px;font-weight:600;" value="Continue to checkout" onclick="clearcart()" class="btn" value="0">
+      {% endif %} 
       </form>
     </div>
   </div>
@@ -184,11 +184,13 @@ margin-bottom: 20px;
 {% endblock %}
 {% block sidenavbar %}
 <div id="mySidenav" class="sidenav" style="padding-top: 23px;">
-  <i class="far fa-user-circle"
-    style="font-size:24px;float:left;padding-top: 4px;margin-left: 28px;font-weight:600;font-size:25px;margin-right:10px"
-    aria-hidden="true"></i>
-  <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!,
-    {{currentuser|truncatewords:1}}</a>
+  <i class="fa fa-user" style="font-size:24px;float:left;padding-top: 4px;margin-left: 24px;font-weight:600;font-size:25px;margin-right:10px"
+  aria-hidden="true"></i>
+{% if currentuser != "" %}
+  <a href= "../" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+{% else %}
+  <a href="../signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, Log in</a>
+{% endif %}
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-left: 0px;margin-left: 0px;">×</a>
   <a href="../myorders" style="padding-right: 100px;padding-top:20px;">My Orders</a>
   <a href="../mycart">My Cart</a>
@@ -208,7 +210,8 @@ margin-bottom: 20px;
   }
 </script>
 {% endblock %}
-{% block alert %}
+
+{% block alert%}
 {% if alert == "filldetails" %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-bottom: 0px;">
   <strong>FILL COMPLETE DETAILS</strong><span style="font-size: 15px;"></span>
@@ -227,13 +230,27 @@ margin-bottom: 20px;
 </div>
 {% endif %}
 {% endblock %}
+
+
 {% block currentuser %}
 <div style="color:aliceblue; margin-left:20px">{{currentuser}}</div>
 {% endblock %}
+
+
+{% block signup %}
+{% if currentuser == "" %}<a class="nav-link" href="../signin"
+  style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Log in</a>
+  <a class="nav-link" href="../createcustomer" style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Sign in</a>
+{% else %}<a class="nav-link" href="../signout"
+style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Sign out</a>
+{% endif %} 
+{% endblock %}
+
+
 {% block cart_count %}
 <li class="nav-item">
-  <a href="/shop/mycart" class="nav-link" aria-disabled="true"><i class="fa"
-      style="font-size:24px;color:aliceblue;padding-left:10px;">&#xf07a;</i><span class='badge badge-warning'
+  <a href="/shop/mycart" class="nav-link" aria-disabled="true" style="padding-bottom: 25px;"><i class="fa"
+      style="font-size:24px;color:aliceblue;padding-left:10px;padding-bottom: 10px;">&#xf07a;</i><span class='badge badge-warning'
       id='lblCartCount'> <span id='cart'>0</span> </span>
   </a>
 </li>

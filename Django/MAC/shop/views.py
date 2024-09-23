@@ -9,6 +9,7 @@ from django.core import serializers
 import json
 from django.views.decorators.csrf import csrf_exempt
 from paytm import checksum
+from django.contrib.auth import login,logout,authenticate
 MERCHANT_KEY='Ee6zeIgR@SNQKu_Z'
 # Create your views here.
 
@@ -72,14 +73,13 @@ def index(request):
         allproducts.append({'product': i, 'list': biglist[z], 'range': range(
             1, nslides1[z]), 'no_of_slides': nslides1[z], 'first5': first5[z]})
         z = z+1
-    ####################################################################################
+    ########################################### #########################################
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
-    for items in custom:
-        name=items.object.customer_name
-    if(name == "Jay"):
-        name = ""
+    if customers != None:
+        for items in custom:
+            name=items.object.customer_name
     ###################################################################################
     params = {'allproducts': allproducts, 'categories': categor,"currentuser":name}
     return render(request, 'shop/index.html', params)
@@ -90,10 +90,9 @@ def about(request):
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
     params={}
-    for items in custom:
-        name=items.object.customer_name
-    if(name == "Jay"):
-        name = ""
+    if customers != None:
+        for items in custom:
+            name=items.object.customer_name
     params["currentuser"]=name
     return render(request, 'shop/about.html',params)
 
@@ -104,12 +103,11 @@ def contactus(request):
         custom=serializers.deserialize("json", customers) ## deserializing json 
         name=""
         params={}
+    if customers != None:
         for items in custom:
             name=items.object.customer_name
-        if(name == "Jay"):
-            name = ""
         params["currentuser"]=name
-        return render(request, 'shop/about.html',params)
+        return render(request, 'shop/contactus.html',params)
     else:
         customname = request.POST.get("name","")
         mail_id = request.POST.get("emailid","")
@@ -129,31 +127,32 @@ def myorders(request):
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
     params={}
-    for items in custom:
-        name=items.object.customer_name
-    if(name == "Jay"):
-        name = ""
+    if customers != None:
+        for items in custom:
+            name=items.object.customer_name
     params["currentuser"]=name
+    if name == "" : return render(request,'shop/myorders.html',params)
     ###########################raw sql queries###########################
     order_details = orderdetails.objects.raw('select * from shop_orderdetails')
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
-    name=""
     orders=[]
     product_ids=[]
-    for item in custom:
-        name=str(item.object.customer_id)
+    mail = ""
+    if customers != None:    
+        for item in custom:
+            mail=str(item.object.Email_id)
     product_gr=[]
     ids=[]
     for items in order_details:
-        if(items.session_id==name):
+        if(items.Email_id==mail):
             orders.append(items)
             ids.append(items.order_id)
             product_ids.append(items.item_json)
     i=0
     resultant = []
     for item in order_details:
-        if(item.session_id==name):
+        if(item.Email_id==mail):
             product_gr.append(json.loads(item.item_json))
             resultant.append([])
     ###############################################################
@@ -162,11 +161,8 @@ def myorders(request):
         for item in items:
             resultant[i].append(items.get(item))
         i=i+1
-    print(resultant)
     params["orders"]=resultant
-    print(ids)
     ids.reverse()
-    print(ids)
     params["ids"]=ids
     return render(request, 'shop/myorders.html',params)
 
@@ -190,18 +186,25 @@ def productview(request):
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
-    for items in custom:
-        name=items.object.customer_name
-    if(name == "Jay"):
-        name = ""
+    if customers != None:
+        for items in custom:
+            name=items.object.customer_name
     params["currentuser"]=name
     params["stock"]=stoc
     return render(request,'shop/productview.html',params)
 
 
 def signin(request):
+    customers=request.session.get("customer")
+    custom=serializers.deserialize("json", customers) ## deserializing json 
+    name=""
+    if customers != None:
+        for items in custom:
+            name=items.object.customer_name
+    params = {}
+    params["currentuser"]=name
     if(request.method=="GET"):
-        return render(request, 'shop/signin.html')
+        return render(request, 'shop/signin.html',params)
     else:
         #################### Raw SQL #############################
         custom = customer.objects.raw('select * from shop_customer;')
@@ -213,8 +216,16 @@ def signin(request):
                 customers = serializers.serialize('json', [ items, ])### converting customer object into json serializable
                 request.session["customer"]=customers ## creating sessions ##json serializing creates js objects
                 return redirect("shophome")## redirecting to home page
-        params={"alert":"incorrectcredentials"}
+        params["alert"]="incorrectcredentials"
         return render(request, 'shop/signin.html',params)
+
+
+def signout(request):
+    try:
+        del request.session['customer']
+    except:
+        return redirect('shophome')
+    return redirect('shophome')
 
 
 def checkout(request):
@@ -222,18 +233,17 @@ def checkout(request):
         customers=request.session.get("customer")
         custom=serializers.deserialize("json", customers) ## deserializing json 
         name=""
+        email = ""
         params={}
-        for items in custom:
-            name=items.object.customer_name
-        if(name == "Jay"):
-            name = ""
+        if customers != None:
+            for items in custom:
+                name=items.object.customer_name
         params["currentuser"]=name
         return render(request, 'shop/checkout.html',params)
     else:
      ######################################################
         item_json = request.POST.get("itemjson","")
         names = request.POST.get("name","")
-        email = request.POST.get("email","")
         address = request.POST.get("address","")
         city = request.POST.get("city","")
         state = request.POST.get("state","")
@@ -261,17 +271,20 @@ def checkout(request):
                         items.save()
     
     ######################################################################
+        email = ""
         if(amount=="0"):
-            params={"cart":"empty"}
+            params={"cart":"empty","currentuser":""}
             return render(request,'shop/checkout.html',params)
         ##############################################################
         customers=request.session.get("customer")
         custom=serializers.deserialize("json", customers) ## deserializing json 
-        session_id=""
-        for items in custom:
-            session_id=items.object.customer_id
+        session_id=" "
+        if customers != None:
+            for items in custom:
+                email = items.object.Email_id
+                session_id=items.object.customer_id
         ################################################################
-        Orderdetails = orderdetails(name_on_card=nameoncard,credit_card_number=cardno,Exp_month=expmonth,cvv=cvv,Exp_year=expyear,item_json=item_json,session_id=session_id,amount=amount)
+        Orderdetails = orderdetails(Email_id = email,name_on_card=nameoncard,credit_card_number=cardno,Exp_month=expmonth,cvv=cvv,Exp_year=expyear,item_json=item_json,session_id=session_id,amount=amount)
         Orderdetails.register()
         Shippingaddress = shippingaddress(fullname=names,mail_id=email,Address=address,city=city,state=state,country=country,zip=zip,order_id_id=Orderdetails.order_id)
         Shippingaddress.register()
@@ -307,8 +320,16 @@ def createcustomer(request):
     ######################## Raw SQL ################################
     custom = customer.objects.raw('select * from shop_customer;')
     ################################################################
+    customers=request.session.get("customer")
+    cust=serializers.deserialize("json", customers) ## deserializing json 
+    name=""
+    if customers != None:
+        for items in cust:
+            name=items.object.customer_name
+    params = {}
+    params["currentuser"]=name
     if(request.method=="GET"):
-        return render(request, 'shop/createcustomer.html')
+        return render(request, 'shop/createcustomer.html',params)
     else:
         ################    Sign up constraints   #################
         custome=request.POST.get("customername","")
@@ -349,6 +370,12 @@ def createcustomer(request):
         ##################################################################
         Customer=customer(customer_name = custome,Email_id = email,phone_no = phone,password =make_password(passw))#creating customer
         Customer.register()#saving customer
+        Custom = customer.objects.raw('select * from shop_customer;')
+        for items in Custom:
+            if(check_password(passw,items.password) and items.Email_id==email):
+                customers = serializers.serialize('json', [ items, ])### converting customer object into json serializable
+                request.session["customer"]=customers ## creating sessions ##json serializing creates js objects
+                return redirect("shophome")## redirecting to home page
         return redirect('shophome')
 
 
@@ -378,10 +405,9 @@ def categories(request):
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
-    for items in custom:
-        name=items.object.customer_name
-    if(name == "Jay"):
-        name = ""
+    if customers != None:
+        for items in custom:
+            name=items.object.customer_name
     ###################################################################################
     params = {"products": productlist, "category": cat,"currentuser":name}
     return render(request, 'shop/categories.html', params)
@@ -391,10 +417,9 @@ def mycart(request):
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
-    for items in custom:
-        name=items.object.customer_name   
-    if(name == "Jay"):
-        name = ""
+    if customers != None:
+        for items in custom:
+            name=items.object.customer_name
     params = {"currentuser":name}
     return render(request,"shop/mycart.html",params)
 
@@ -412,10 +437,9 @@ def sale(request):
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
-    for items in custom:
-        name=items.object.customer_name
-    if(name == "Jay"):
-        name = ""
+    if customers != None:
+        for items in custom:
+            name=items.object.customer_name
     ###########################################################################
     params={"dispro":dispro,"currentuser":name,"category": cat}
     return render(request,"shop/sale.html",params)

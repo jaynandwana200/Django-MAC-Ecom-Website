@@ -55,8 +55,13 @@ background: #0b7dda;
 {% endblock %}
 
 
-{% block signup %}<a class="nav-link" href="signin"
-  style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Sign in</a>
+{% block signup %}
+{% if currentuser == "" %}<a class="nav-link" href="signin"
+  style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Log in</a>
+  <a class="nav-link" href="createcustomer" style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Sign in</a>
+{% else %}<a class="nav-link" href="signout"
+style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 0px;">Sign out</a>
+{% endif %} 
 {% endblock %}
 
 
@@ -132,7 +137,7 @@ background: #0b7dda;
           {% for item1 in prods.first5 %}
           <div class="djangoslideshow">
             <div class="card d-block w-9" style="width: 13.65rem;float:left">
-              <img src="/media/{{item1.image}}" class="card-img-top" alt="..." height="130">
+              <img src="/media/{{item1.image}}" class="card-img-top" alt="..." height="200">
               <div class="card-body">
                 <h6 id="namepr{{item1.id}}" class="card-title" style="font-size: 15px; font-weight:600 ">{{item1.product_name}}</h6>
                 <p class="card-text" style="font-size:13px; font-weight:500;margin-bottom:2px;">
@@ -231,8 +236,8 @@ background: #0b7dda;
 {% endblock %}
 {% block cart_count %}
 <li class="nav-item">
-  <a href="/shop/mycart" class="nav-link" aria-disabled="true"><i class="fa"
-      style="font-size:24px;color:aliceblue;padding-left:10px;">&#xf07a;</i><span class='badge badge-warning'
+  <a href="/shop/mycart" class="nav-link" aria-disabled="true" style="padding-bottom: 25px;"><i class="fa"
+      style="font-size:24px;color:aliceblue;padding-left:10px;padding-bottom: 10px;">&#xf07a;</i><span class='badge badge-warning'
       id='lblCartCount'> <span id='cart'>0</span> </span>
   </a>
 </li>
@@ -241,7 +246,13 @@ background: #0b7dda;
 <div id="mySidenav" class="sidenav" style="padding-top: 23px;">
   <i class="fa fa-user" style="font-size:24px;float:left;padding-top: 4px;margin-left: 24px;font-weight:600;font-size:25px;margin-right:10px"
     aria-hidden="true"></i>
-  <a href="signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+  
+    {% if currentuser != "" %}
+    <a href= "../shop" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, {{currentuser|truncatewords:1}}</a>
+  {% else %}
+    <a href="../shop/signin" style="padding-left:15px;padding-top: 2px;font-weight:600;font-size:20px">Hi!, Log in</a>
+  {% endif %}
+  
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="padding-left: 0px;margin-left: 0px;">×</a>
   <a href="myorders" style="padding-right: 100px;padding-top:20px;">My Orders</a>
   <a href="mycart">My Cart</a>
