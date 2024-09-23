@@ -9,3 +9,4 @@ whitenoise
 django-admin-numeric-filter
 django-admin-rangefilter
 django-rangefilter
+django-cryptography
