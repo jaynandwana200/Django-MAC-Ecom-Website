@@ -29,9 +29,9 @@ DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 SECRET_KEY = '(c9p7u6_fgdv+8#@bgl8&)bakt%ynd6tz(g%kl@$r8+um)fb$2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ''
+ALLOWED_HOSTS = ['.vercel.app','.now.sh']
 
 
 # Application definition
@@ -142,3 +142,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+
+import os
+STATICFILES_DIR =  os.path.join(BASE_DIR,'static'),
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
