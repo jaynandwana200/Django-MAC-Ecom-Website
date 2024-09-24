@@ -11,3 +11,4 @@ django-admin-rangefilter
 django-rangefilter
 django-cryptography
 pycryptodome
+setuptools
