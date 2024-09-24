@@ -31,12 +31,13 @@ SECRET_KEY = '(c9p7u6_fgdv+8#@bgl8&)bakt%ynd6tz(g%kl@$r8+um)fb$2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['https://django-mac-ecom-website.vercel.app/']
+ALLOWED_HOSTS = ['https://django-mac-ecom-website.vercel.app/','.vercel.app','.now.sh']
 # 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -142,7 +143,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 
 
 import os
