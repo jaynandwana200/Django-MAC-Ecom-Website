@@ -89,7 +89,25 @@ def about(request):
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
+
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
+
+
     params={}
+    params["categories"]=categor
     if customers != None:
         for items in custom:
             name=items.object.customer_name
@@ -98,11 +116,28 @@ def about(request):
 
 
 def contactus(request):
+
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
+
     if(request.method=="GET"):
         customers=request.session.get("customer")
         custom=serializers.deserialize("json", customers) ## deserializing json 
         name=""
         params={}
+        params["categories"]=categor
     if customers != None:
         for items in custom:
             name=items.object.customer_name
@@ -123,6 +158,23 @@ def contactus(request):
 
 
 def myorders(request):
+
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
+
+
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
@@ -164,10 +216,28 @@ def myorders(request):
     params["orders"]=resultant
     ids.reverse()
     params["ids"]=ids
+    params["categories"]=categor
     return render(request, 'shop/myorders.html',params)
 
 
 def productview(request):
+
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
+    
+
     products = product.objects.raw('SELECT * FROM shop_product')
     ####################################################### 
     ########################################################
@@ -177,6 +247,7 @@ def productview(request):
         if(str(items.id) == str(prodview)):
             stoc = items.stock
     params={}
+    params["categories"]=categor
     for items in products:
         if(str(items.id)==prodview):
             params["product"]=items
@@ -195,6 +266,24 @@ def productview(request):
 
 
 def signin(request):
+
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
+
+
+
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
@@ -202,6 +291,7 @@ def signin(request):
         for items in custom:
             name=items.object.customer_name
     params = {}
+    params["categories"]=categor
     params["currentuser"]=name
     if(request.method=="GET"):
         return render(request, 'shop/signin.html',params)
@@ -229,12 +319,30 @@ def signout(request):
 
 
 def checkout(request):
+
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
+
+
     if(request.method=="GET"):
         customers=request.session.get("customer")
         custom=serializers.deserialize("json", customers) ## deserializing json 
         name=""
         email = ""
         params={}
+        params["categories"]=categor
         if customers != None:
             for items in custom:
                 name=items.object.customer_name
@@ -317,6 +425,22 @@ def checkout(request):
 
 
 def createcustomer(request):
+
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
+
     ######################## Raw SQL ################################
     custom = customer.objects.raw('select * from shop_customer;')
     ################################################################
@@ -327,6 +451,7 @@ def createcustomer(request):
         for items in cust:
             name=items.object.customer_name
     params = {}
+    params["categories"]=categor
     params["currentuser"]=name
     if(request.method=="GET"):
         return render(request, 'shop/createcustomer.html',params)
@@ -380,6 +505,23 @@ def createcustomer(request):
 
 
 def categories(request):
+
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
+
+
     ####################### Raw SQL #################################
     products = product.objects.raw('SELECT * FROM shop_product')
     cat = request.GET.get('category', 'products') #### fetching data from webpage
@@ -409,11 +551,28 @@ def categories(request):
         for items in custom:
             name=items.object.customer_name
     ###################################################################################
-    params = {"products": productlist, "category": cat,"currentuser":name}
+    params = {"products": productlist, "category": cat,"currentuser":name,"categories":categor}
     return render(request, 'shop/categories.html', params)
 
 
 def mycart(request):
+
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
+
+
     customers=request.session.get("customer")
     custom=serializers.deserialize("json", customers) ## deserializing json 
     name=""
@@ -421,11 +580,25 @@ def mycart(request):
         for items in custom:
             name=items.object.customer_name
     params = {"currentuser":name}
+    params["categories"]=categor
     return render(request,"shop/mycart.html",params)
 
 
 def sale(request):
-
+    products = product.objects.raw('SELECT * FROM shop_product')
+    catemp = product.objects.raw('select category,id from shop_product')
+    categories = set()
+    for items in catemp:
+        categories.add(items.category)
+    categ = []
+    for idx, item in enumerate(categories):
+        categ.append({item: []})
+        for ele in products:
+            if(list(categ[idx].keys())[0] == ele.category):
+                categ[idx][list(categ[idx].keys())[0]].append(ele)
+    categor = []
+    for items in categories:
+        categor.append(items)
     ################################RAW SQL###########################
     products = product.objects.raw('SELECT * FROM shop_product')
     cat = request.GET.get('category', 'default')
@@ -441,7 +614,7 @@ def sale(request):
         for items in custom:
             name=items.object.customer_name
     ###########################################################################
-    params={"dispro":dispro,"currentuser":name,"category": cat}
+    params={"dispro":dispro,"currentuser":name,"category": cat,"categories":categor}
     return render(request,"shop/sale.html",params)
 
 @csrf_exempt

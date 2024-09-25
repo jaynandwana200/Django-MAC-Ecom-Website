@@ -297,6 +297,33 @@ a {
 }
 
 {% endblock%}
+
+{% block searchbar %}
+<form class="d-flex" action="../categories" style="margin-left:20px">
+  <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search"
+    style="width: 500px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
+  <button type="submit" class="btn btn-primary cart"><i class="fa fa-search"></i></button>
+</form>
+{% endblock %}
+
+{% block dropdown %}
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+    aria-expanded="false">
+    Categories
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="padding: 0px;border-radius:0px;">
+    {% for item in categories %}
+    <form action="../categories">
+      <input type="submit" value="{{item}}" name="category"
+        style=" padding-left:5px;padding-right:25px;width:100%;text-align:left ;border:0px; font-weight:500;font-size:15px;padding-bottom:5px"
+        class="dropdown">
+    </form>
+    {% endfor %}
+  </ul>
+</li>
+{% endblock %}
+
 {% block body%}
 <div class="wrapper fadeInDown">
   <div id="formContent">

@@ -59,6 +59,41 @@ html {
   width: 100%;
 }
 
+.d-flex{
+  box-sizing: border-box
+  }
+  .d-flex input[type=text] {
+  padding: 5px;
+  padding-right: 0px;
+  font-size: 15px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+  }
+  .d-flex button {
+  float: left;
+  width: 7%;
+  padding-top: 0px;
+  padding: 5px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  }
+  .d-flex::after {
+  content: "";
+  clear: both;
+  display: table;
+  }
+  .d-flex button:hover {
+  background: #0b7dda;
+  }
+
 .button:hover {
   background-color: #555;
 }
@@ -86,6 +121,32 @@ a:active {
   }
 }
 
+{% endblock %}
+
+{% block searchbar %}
+<form class="d-flex" action="../categories" style="margin-left:20px;margin-top: 20px;">
+  <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search"
+    style="width: 500px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
+  <button type="submit" class="btn btn-primary cart"><i class="fa fa-search"></i></button>
+</form>
+{% endblock %}
+
+{% block dropdown %}
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+    aria-expanded="false">
+    Categories
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="padding: 0px;border-radius:0px;">
+    {% for item in categories %}
+    <form action="../categories" class="cat">
+      <input type="submit" value="{{item}}" name="category"
+        style=" padding-left:5px;padding-right:25px;width:100%;text-align:left ;border:0px; font-weight:500;font-size:15px;padding-bottom:5px"
+        class="dropdown">
+    </form>
+    {% endfor %}
+  </ul>
+</li>
 {% endblock %}
 
 {% block signup %}
@@ -131,7 +192,7 @@ style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 
 </li>
 {% endblock %}
 {% block currentuser %}
-    <div style="color:aliceblue;margin-right:10px">{{currentuser}}</div>
+<div style="color:aliceblue; margin-left:20px">{{currentuser}}</div>
 {% endblock %}
 {% block sidenavbar %}
 <div id="mySidenav" class="sidenav" style="padding-top: 23px;">

@@ -37,7 +37,23 @@
             vertical-align: top;
             margin-left: -10px;
         }
-
+        input.dropdown:hover{
+        background-color:#0044cc;
+        color:white;
+        }
+        .dropdown-menu{
+        max-height: 300px;
+        overflow-y: auto;
+        scrollbar-color:dark;
+        border:0.5px;
+        border-style:solid;
+        border-color:#808080;
+        padding:3px;
+        }
+        .cat{
+            margin-bottom: 0;
+            margin-left: 0;
+        }
         .sidenav {
             white-space: nowrap;
             height: 100%;
@@ -72,6 +88,43 @@
             font-size: 36px;
             margin-left: 50px;
         }
+        
+        .d-flex{
+        box-sizing: border-box
+        }
+        .d-flex input[type=text] {
+        padding: 5px;
+        padding-right: 0px;
+        font-size: 15px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+        }
+        .d-flex button {
+        float: left;
+        width: 7%;
+        padding-top: 0px;
+        padding: 5px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none; /* Prevent double borders */
+        cursor: pointer;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        }
+        .d-flex::after {
+        content: "";
+        clear: both;
+        display: table;
+        }
+        .d-flex button:hover {
+        background: #0b7dda;
+        }
+
+
 
         @media screen and (max-height: 450px) {
             .sidenav {

@@ -23,6 +23,15 @@
     </div>
 </div>
 {% endblock %}
+
+{% block searchbar %}
+<form class="d-flex" action="../categories" style="margin-left:20px">
+  <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search"
+    style="width: 500px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
+  <button type="submit" class="btn btn-primary cart"><i class="fa fa-search"></i></button>
+</form>
+{% endblock %}
+
 {% block sidenavbar %}
 <div id="mySidenav" class="sidenav" style="padding-top: 23px;">
   <i class="fa fa-user" style="font-size:24px;float:left;padding-top: 4px;margin-left: 24px;font-weight:600;font-size:25px;margin-right:10px"

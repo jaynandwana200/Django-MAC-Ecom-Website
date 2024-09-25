@@ -2,49 +2,26 @@
 {% block title %} Categories {% endblock %}
 {% load static %}
 {% block Css %}
+
+
+
 a.bread {
 text-decoration:none;
 color:#262626;
 font-weight:500;
 }
-.d-flex{
-box-sizing: border-box
-}
-.d-flex input[type=text] {
-padding: 5px;
-padding-right: 0px;
-font-size: 15px;
-border: 1px solid grey;
-float: left;
-width: 80%;
-background: #f1f1f1;
-}
-.d-flex button {
-float: left;
-width: 7%;
-padding-top: 0px;
-padding: 5px;
-background: #2196F3;
-color: white;
-font-size: 17px;
-border: 1px solid grey;
-border-left: none; /* Prevent double borders */
-cursor: pointer;
-border-top-right-radius: 5px;
-border-bottom-right-radius: 5px;
-}
-.d-flex::after {
-content: "";
-clear: both;
-display: table;
-}
-.d-flex button:hover {
-background: #0b7dda;
-}
 {% load shoptemplates %}
 {% endblock %}
 {% block currentuser %}
-<div style="color:aliceblue;margin-right:10px">{{currentuser}}</div>
+<div style="color:aliceblue; margin-left:20px">{{currentuser}}</div>
+{% endblock %}
+
+{% block searchbar %}
+<form class="d-flex" action="../categories"  style="margin-left:20px">
+  <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search"
+    style="width: 500px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
+  <button type="submit" class="btn btn-primary cart"><i class="fa fa-search"></i></button>
+</form>
 {% endblock %}
 
 {% block signup %}
@@ -56,25 +33,38 @@ style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 
 {% endif %} 
 {% endblock %}
 
-{% block searchbar %}
-<form class="d-flex" action="" style="margin-right: 20px;">
-  <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search"
-    style="width: 500px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
-  <button type="submit"><i class="fa fa-search"></i></button>
-</form>{% endblock %}
+{% block dropdown %}
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+    aria-expanded="false">
+    Categories
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="padding: 0px;border-radius:0px;">
+    {% for item in categories %}
+    <form action="../categories">
+      <input type="submit" value="{{item}}" name="category"
+        style=" padding-left:5px;padding-right:25px;width:100%;text-align:left ;border:0px; font-weight:500;font-size:15px;padding-bottom:5px"
+        class="dropdown">
+    </form>
+    {% endfor %}
+  </ul>
+</li>
+{% endblock %}
+
+
 {% block body %}
 
 <div class="container">
   <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>';">
     <ol class="breadcrumb" style="margin-top:10px; margin-bottom:0px; padding-left:3px">
-      <li class="breadcrumb-item"><a href="/shop" class="bread">Home</a></li>
-      <li class="breadcrumb-item"><a href="/shop" class="bread">Categories</a></li>
+      <li class="breadcrumb-item"><a href="../" class="bread">Home</a></li>
+      <li class="breadcrumb-item"><a href="" class="bread">Categories</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{category}}</li>
     </ol>
   </nav>
   {% for items in products %}
   <div class="card" style="width: 13.5rem; display:inline-block; margin-top:20px ;">
-    <img src="/media/{{items.image}}" class="card-img-top" alt="..." height="130">
+    <img src="/media/{{items.image}}" class="card-img-top" alt="..." height="200">
     <div class="card-body">
       <h6 id="namepr{{items.id}}" class="card-title" style="font-size: 15px; font-weight:600 ">{{items.product_name}}
       </h6>
@@ -90,14 +80,14 @@ style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 
       <span style="color: crimson;color:crimson;font-weight:600;display:block"><span style="padding-bottom: 10px;">Out of Stock</span></span>
       {% endif %}
       {% else %}
-      <div style="color:#262626;font-weight:600">M.R.P :<strike style="color: #262626;">&#8377;{{items.price}}</strike> <span style="color: crimson;"> &#8377; <span id="pricepr{{items.id}}" >{{items.price|discountedprice:items.discount}}</span></span></div>
+      <div style="color:#262626;font-weight:600">M.R.P :<strike style="color: #262626;">&#8377;{{items.price|stringformat:'d'}}</strike> <span style="color: crimson;"> &#8377; <span id="pricepr{{items.id}}" >{{items.price|discountedprice:items.discount|stringformat:'d'}}</span></span></div>
       {% if items.stock > 0 %}
-      <span style="color: crimson;font-weight:600;display:block"> {{items.discount}} % off</span> 
+      <span style="color: crimson;font-weight:600;display:block"> {{items.discount}} %off</span> 
       <button id="pr{{items.id}}" class="btn btn-primary cart"
         style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px; display:inline">Add
         to cart</button>
       {% else %}
-      <span style="color: crimson;font-weight:600;display:block"> {{items.discount}} % off  <span style="margin-left: 10px;"> Out of Stock</span></span>
+      <span style="color: crimson;font-weight:600;display:block"> {{items.discount}} %off  <span style="margin-left: 10px;"> Out of Stock</span></span>
       {% endif %}
       {% endif %}
       <form action="../productview" method="get" style="display: inline;">

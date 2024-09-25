@@ -3,53 +3,6 @@
 {% block title %} Shop {% endblock %}
 {% load static %}
 {% block Css %}
-input.dropdown:hover{
-background-color:#0044cc;
-color:white;
-}
-.dropdown-menu{
-max-height: 300px;
-overflow-y: auto;
-scrollbar-color:dark;
-border:0.5px;
-border-style:solid;
-border-color:#808080;
-padding:3px;
-}
-.d-flex{
-box-sizing: border-box
-}
-.d-flex input[type=text] {
-padding: 5px;
-padding-right: 0px;
-font-size: 15px;
-border: 1px solid grey;
-float: left;
-width: 80%;
-background: #f1f1f1;
-}
-.d-flex button {
-float: left;
-width: 7%;
-padding-top: 0px;
-padding: 5px;
-background: #2196F3;
-color: white;
-font-size: 17px;
-border: 1px solid grey;
-border-left: none; /* Prevent double borders */
-cursor: pointer;
-border-top-right-radius: 5px;
-border-bottom-right-radius: 5px;
-}
-.d-flex::after {
-content: "";
-clear: both;
-display: table;
-}
-.d-flex button:hover {
-background: #0b7dda;
-}
 {% endblock %}
 {% block currentuser %}
 <div style="color:aliceblue; margin-left:20px">{{currentuser}}</div>
@@ -67,10 +20,10 @@ style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 
 
 
 {% block searchbar %}
-<form class="d-flex" action="categories" style="margin-left:20px">
+<form class="d-flex"  action="categories" style="margin-left:20px">
   <input class="form-control" type="search" placeholder="Search" name="search" aria-label="Search"
     style="width: 500px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
-  <button type="submit"><i class="fa fa-search"></i></button>
+  <button type="submit" class="btn btn-primary cart"><i class="fa fa-search"></i></button>
 </form>
 {% endblock %}
 
@@ -145,22 +98,22 @@ style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 
                   {{item1.desc|truncatechars:50}}</p>
                   {% if item1.discount == 0 %}
                   {% if item1.stock > 0 %}
-                  <div  style="margin-top:12px;color:#262626;font-weight:600;margin-bottom: 13px;">M.R.P :&#8377;<span id="pricepr{{item1.id}}">{{item1.price}}</span></div>
+                  <div  style="margin-top:11px;color:#262626;font-weight:600;margin-bottom: 20px;">M.R.P :&#8377;<span id="pricepr{{item1.id}}">{{item1.price}}</span></div>
                   <button id="pr{{item1.id}}" class="btn btn-primary cart"
                     style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px; display:inline">Add to cart</button>
                     {% else %}
                     <div style="color:#262626;font-weight:600;">M.R.P :&#8377;<span id="pricepr{{item1.id}}">{{item1.price}}</span></div>
-                    <span style="color:crimson;font-weight:600;display:block"><span>Out of Stock</span></span>    
+                    <span style="color:crimson;font-weight:600;display:block;margin-bottom: 5px;"><span>Out of Stock</span></span>    
                     {% endif %}
                     {% else %}
-                    <div style="color:#262626;font-weight:600">M.R.P :<strike style="color: #262626;">&#8377;{{item1.price}}</strike> <span style="color: crimson;"> &#8377;<span id="pricepr{{item1.id}}">{{item1.price|discountedprice:item1.discount }}</span></span></div>
+                    <div style="color:#262626;font-weight:600">M.R.P :<strike style="color: #262626;">&#8377;{{item1.price}}</strike> <span style="color: crimson;"> &#8377;<span id="pricepr{{item1.id}}">{{item1.price|discountedprice:item1.discount|stringformat:'d' }}</span></span></div>
                       {% if item1.stock > 0 %}
-                      <span style="color: crimson;font-weight:600;display:block">{{item1.discount}} % off</span>
+                      <span style="color: crimson;font-weight:600;margin-bottom: 5px;display:block">{{item1.discount}} % off</span>
                       <button id="pr{{item1.id}}" class="btn btn-primary cart"
                         style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px; display:inline">Add
                         to cart</button>
                         {% else %}
-                        <span style="color: crimson;font-weight:600;display:block"> {{item1.discount}} % off  <span style="margin-left: 10px;" >Out of Stock</span></span>    
+                        <span style="color: crimson;font-weight:600;display:block;margin-bottom: 5px;"> {{item1.discount}} % off  <span style="margin-left: 0px;margin-bottom: 10px;" >Out of Stock</span></span>    
                         {% endif %}
                   {% endif %}
                 <form action="productview" method="get" style="display: inline;">
@@ -183,23 +136,23 @@ style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 
                 <p class="card-text" style="font-size:13px; font-weight:500;margin-bottom:2px;">{{value.desc|truncatechars:50}}</p>
                   {% if value.discount == 0 %}
                   {% if value.stock > 0 %}
-                  <div style="margin-top:11px;color:#262626;font-weight:600;margin-bottom: 10px;">M.R.P :&#8377;<span id="pricepr{{value.id}}" >{{value.price}}</span></div>
+                  <div style="margin-top:11px;color:#262626;font-weight:600;margin-bottom: 20px;">M.R.P :&#8377;<span id="pricepr{{value.id}}" >{{value.price}}</span></div>
                   <button id="pr{{value.id}}" class="btn btn-primary cart"
-                    style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 2px; display:inline">Add
+                    style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px; display:inline">Add
                     to cart</button>
                     {% else %}
                     <div style="color:#262626;font-weight:600">M.R.P :&#8377;<span id="pricepr{{value.id}}">{{value.price}}</span></div>
-                    <span style="color: crimson;color:crimson;font-weight:600;display:block"><span style="margin-left: 10px;" >Out of Stock</span></span>    
+                    <span style="color: crimson;color:crimson;font-weight:600;display:block;margin-bottom: 5px;"><span style="margin-left: 0px;" >Out of Stock</span></span>    
                     {% endif %}
                   {% else %}
-                  <div style="color:#262626;font-weight:600">M.R.P :<strike style="color: #262626;">&#8377;<span style="color:#262626;font-weight:600;">&#8377;{{value.price}}</span></strike> <span style="color: crimson;"> &#8377;<span id="pricepr{{value.id}}">{{value.price|discountedprice:value.discount }}</span></span></div>
+                  <div style="color:#262626;font-weight:600">M.R.P :<strike style="color: #262626;"><span style="color:#262626;font-weight:600;">&#8377;{{value.price}}</span></strike> <span style="color: crimson;"> &#8377;<span id="pricepr{{value.id}}">{{value.price|discountedprice:value.discount|stringformat:'d' }}</span></span></div>
                       {% if value.stock > 0 %}
-                      <span style="color: crimson;font-weight:600;display:block"> {{value.discount}} % off</span>
+                      <span style="color: crimson;font-weight:600;margin-bottom: 5px;display:block"> {{value.discount}}% off</span>
                       <button id="pr{{value.id}}" class="btn btn-primary cart"
                         style="font-size: 15px;padding-left: 5px;padding-right: 5px;padding-bottom: 4px;padding-top: 4px; display:inline">Add
                         to cart</button>
                         {% else %}
-                        <span style="color: crimson;color:crimson;font-weight:600;display:block"> {{value.discount}} % off  <span style="margin-left: 10px;" >Out of Stock</span></span>    
+                        <span style="color: crimson;color:crimson;font-weight:600;display:block;margin-bottom: 5px;"> {{value.discount}}% off  <span style="margin-left: 0px;" >Out of Stock</span></span>    
                         {% endif %}
                   {% endif %}
                 <form action="productview" method="GET" style="display: inline;">
