@@ -8,16 +8,16 @@
     {% for items in orders %}
     <h5 style="margin-bottom: 25px ;"> Order Id : {{ids|last}}</h5>
     {{ids|pop}}
-    <span style="font-size: 19px;padding-bottom: 50px;font-weight: 500;">Product</span>
-    <span style="font-size: 19px;font-weight: 500;padding-bottom: 20px;margin-left: 435px">Quantity</span>
+    <span style="font-size: 19px;font-weight: 500;padding-bottom: 20px;">Quantity</span>
+    <span style="margin-left: 435px;font-size: 19px;padding-bottom: 50px;font-weight: 500;">Product</span>
     <span style="float:right;font-size: 19px;font-weight: 500;">Price</span>
     <br>
       {% for item in items %}
       {% for i in item %}
       {% if forloop.counter == 1 %}
-      <span style="margin-left: 500px;">{{i}}</span>
-      {% elif forloop.counter == 2 %}
       <span style="padding-top: 20px;">{{i}}</span>
+      {% elif forloop.counter == 2 %}
+      <span style="margin-left: 500px;">{{i}}</span>
       {% elif forloop.counter == 3 %}
       <span style="float:right;">&#8377; {{i}}</span>
       {% endif %}
