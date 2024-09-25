@@ -400,14 +400,15 @@
         cart = {};
     }
 //////////////////////////////////check out page js//////////////////////////////////
-    var totalsum;
+    var totalsum,amount;
     totalsum=0;    
     for(items in cart){
         let name = cart[items][1];
         let qty = cart[items][0];
         let price =cart[items][2];
         totalsum = totalsum + price*qty;
-        mystr=`<li>${name} <span style="float:right; margin-left:80px" >&#8377; ${price}</span><span class="quantity" style="float:right;margin-left:40px">${qty}</span></li>`
+        amount = price*qty
+        mystr=`<li>${name}<span class="quantity" style="float:right;margin-left:100px">&#8377; ${amount}</span> <span style="float:right; margin-left:100px" >&#8377; ${price}</span><span class="quantity" style="float:right;margin-left:100px">${qty}</span></li>`
         $('#items').append(mystr);
     }
     try {

@@ -91,7 +91,10 @@ style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 
           {% for item1 in prods.first5 %}
           <div class="djangoslideshow">
             <div class="card d-block w-9" style="width: 13.65rem;float:left">
-              <img src="/media/{{item1.image}}" class="card-img-top" alt="..." height="200">
+              <form action="productview" method="get">
+                <input type="hidden" name="products" value="{{item1.id}}">
+                <input type="image" src="/media/{{item1.image}}" class="card-img-top" alt="..." height="200">
+              </form>
               <div class="card-body">
                 <h6 id="namepr{{item1.id}}" class="card-title" style="font-size: 15px; font-weight:600 ">{{item1.product_name}}</h6>
                 <p class="card-text" style="font-size:13px; font-weight:500;margin-bottom:2px;">
@@ -130,7 +133,10 @@ style="text-decoration: none;color:aliceblue;padding-bottom: 10px;padding-left: 
           {% for key,value in i.items %}
           <div class="djangoslideshow">
             <div class="card d-block w-9" style="width: 13.65rem;float:left">
-              <img src="/media/{{value.image}}" class="card-img-top" alt="..." height="200">
+              <form action="productview" method="get">
+                <input type="hidden" name="products" value="{{item1.id}}">
+                <input type="image" src="/media/{{value.image}}" class="card-img-top" alt="..." height="200">
+              </form>
               <div class="card-body">
               <h6 id="namepr{{value.id}}" class="card-title" style="font-size: 15px; font-weight:600 ">{{value.product_name}}</h6>
                 <p class="card-text" style="font-size:13px; font-weight:500;margin-bottom:2px;">{{value.desc|truncatechars:50}}</p>
