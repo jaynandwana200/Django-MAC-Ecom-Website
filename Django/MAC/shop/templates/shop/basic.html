@@ -353,7 +353,7 @@
     } catch (error) {
         
     }
-    $('.cartremove').click(function () {                        //removing items from cart          ///////JQuery   
+    $('.cartremove').click(function () {//removing items from cart          ///////JQuery   
         var idst = this.id.toString();
         if (cart[idst][0] > 0) {
             cart[idst][0] = cart[idst][0] - 1;
@@ -408,7 +408,7 @@
         let price =cart[items][2];
         totalsum = totalsum + price*qty;
         amount = price*qty
-        mystr=`<li>${name}<span class="quantity" style="float:right;margin-left:100px">&#8377; ${amount}</span> <span style="float:right; margin-left:100px" >&#8377; ${price}</span><span class="quantity" style="float:right;margin-left:100px">${qty}</span></li>`
+        mystr=`<li>${name}<span class="quantity" style="float:right;margin-right:10px">&#8377; ${amount}</span> <span style="float:right; margin-right:120px" >&#8377; ${price}</span><span class="quantity" style="float:right;margin-right:120px">${qty}</span></li>`
         $('#items').append(mystr);
     }
     try {
