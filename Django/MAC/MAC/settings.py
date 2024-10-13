@@ -31,7 +31,7 @@ SECRET_KEY = '(c9p7u6_fgdv+8#@bgl8&)bakt%ynd6tz(g%kl@$r8+um)fb$2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app','.now.sh']
+ALLOWED_HOSTS = ['.vercel.app','.now.sh','*']
 # 
 
 # Application definition
@@ -90,10 +90,10 @@ WSGI_APPLICATION = 'MAC.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Django',
-        'USER': 'django@nnnnnnnnnnnnnnnnnnfghbfghff',
+        'NAME': 'postgres',
+        'USER': 'JayNandwana',
         'PASSWORD': 'Lakshi@2004',
-        'HOST': "nnnnnnnnnnnnnnnnnnfghbfghff.postgres.database.azure.com",
+        'HOST': "sdfsfd.postgres.database.azure.com",
         'PORT': '5432',
         "OPTIONS":{"sslmode" : "require"},
     }}
