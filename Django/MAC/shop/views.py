@@ -222,7 +222,7 @@ def myorders(request):
 
 def productview(request):
 
-    pro = product.objects.raw('SELECT * FROM shop_product')
+    products = product.objects.raw('SELECT * FROM shop_product')
     catemp = product.objects.raw('select category,id from shop_product')
     categories = set()
     for items in catemp:
@@ -230,7 +230,7 @@ def productview(request):
     categ = []
     for idx, item in enumerate(categories):
         categ.append({item: []})
-        for ele in pro:
+        for ele in products:
             if(list(categ[idx].keys())[0] == ele.category):
                 categ[idx][list(categ[idx].keys())[0]].append(ele)
     categor = []
@@ -238,7 +238,6 @@ def productview(request):
         categor.append(items)
     
 
-    products = product.objects.raw('SELECT * FROM shop_product')
     ####################################################### 
     ########################################################
     prodview=request.GET.get("products","default")## fetching data from index page
