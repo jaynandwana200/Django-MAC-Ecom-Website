@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'bharatshopee',
         'USER': 'postgres',
         'PASSWORD': 'Lakshi2004',
-        'HOST': "bharatshopee.ch802a80abk3.ap-southeast-2.rds.amazonaws.com",
+        'HOST': "bharatshopee.cx0e8eq42joa.eu-north-1.rds.amazonaws.com",
         'PORT': '5432',
         "OPTIONS":{"sslmode" : "require"},
     }}
